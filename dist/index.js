@@ -28,17 +28,22 @@ const fs = __importStar(require("fs"));
 function analyzeDjango(rootPath) {
     const mypyConfig = `
   [mypy]
-  plugins = plugin/main.py
+  plugins = plugin.py
   ignore_missing_imports = True
   follow_imports = silent
   check_untyped_defs = True
+  show_traceback = True
   `;
     let mypyConfigPath = __dirname + "/mypy.ini";
     fs.writeFileSync(mypyConfigPath, mypyConfig);
-    let ret = child.spawnSync("mypy", ["--config-file", mypyConfigPath, rootPath]);
-    return ret.error, ret.stdout.toString(), ret.stderr.toString();
+    let ret = child.spawnSync("mypy", [
+        "--config-file",
+        mypyConfigPath,
+        rootPath,
+    ]);
+    return [ret.error, ret.stdout.toString(), ret.stderr.toString()];
 }
-let err, stdout, stderr = analyzeDjango("/home/ctring/src/readwrite/examples/django-examples/books/books");
+let [err, stdout, stderr] = analyzeDjango("/home/ctring/src/readwrite/examples/django-examples/books/books");
 console.log("ERR:", err);
 console.log("STDOUT:", stdout);
 console.log("STDERR:", stderr);
