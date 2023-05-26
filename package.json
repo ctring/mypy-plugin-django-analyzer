@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.2.4",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+}
